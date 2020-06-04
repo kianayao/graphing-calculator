@@ -5,6 +5,7 @@
 #include "../../!includes/my_vector/my_vector.h"
 #include "coordinate_translator.h"
 #include "rpn.h"
+#include "tokenizer.h"
 
 class plot {
 public:
@@ -14,7 +15,7 @@ public:
 private:
     graph_info* _info;
     rpn _rpn;
-    //Shunt_Yard _postfix;
+    Shunt_Yard _postfix;
 
 };
 

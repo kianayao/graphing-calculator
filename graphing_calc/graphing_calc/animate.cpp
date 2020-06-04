@@ -1,12 +1,11 @@
 #include "animate.h"
-#include "system.h"
 
 #include <iostream>
 using namespace std;
 
 
 animate::animate(): sidebar(WORK_PANEL, SIDE_BAR), system(_info),
-                    _info(new graph_info), _sidebar_index(SB_KEY_PRESSED + 1),
+                    _info(new graph_info), _sidebar_index(0),
                     _function(""), _entering_func(false)
 
 {
@@ -52,14 +51,13 @@ animate::animate(): sidebar(WORK_PANEL, SIDE_BAR), system(_info),
 
 
 
-
-
     cout<<"animate instantiated successfully."<<endl;
 }
 
 void animate::Draw(){
     //Look at the data and based on the data, draw shapes on window object.
     system.Draw(window);
+    system.entering_function(window, _entering_func, _function);
     if (mouseIn){
         window.draw(mousePoint);
     }
@@ -87,9 +85,14 @@ void animate::update(){
                                sf::Mouse::getPosition(window).y-5);
 
         //mouse location text for sidebar:
-        sidebar[SB_MOUSE_POSITION] = mouse_pos_string(window);
 
+        sidebar[SB_MOUSE_POSITION] = mouse_pos_string(window);
     }
+
+    string domain = to_string(_info->_domain.x) + ", " +
+                    to_string(_info->_domain.y);
+
+    sidebar[SB_DOMAIN] = domain;
 }
 void animate::render(){
        window.clear();
@@ -117,42 +120,86 @@ void animate::processEvents()
                switch(event.key.code){
 
                 case sf::Keyboard::Left:
-                   sidebar[SB_KEY_PRESSED] = "LEFT ARROW";
-                   _command = 4;
+                   if (! _entering_func) {
+                       sidebar[SB_KEY_PRESSED] = "LEFT ARROW";
+                       _command = 4;
+                   }
                    break;
 
                case sf::Keyboard::Right:
-                   sidebar[SB_KEY_PRESSED] = "RIGHT ARROW";
-                   _command = 6;
+                   if (! _entering_func) {
+                       sidebar[SB_KEY_PRESSED] = "RIGHT ARROW";
+                       _command = 6;
+                   }
                    break;
 
                case sf::Keyboard::Escape:
-                   sidebar[SB_KEY_PRESSED] = "ESC: EXIT";
-                   window.close();
+                   if (! _entering_func) {
+                       sidebar[SB_KEY_PRESSED] = "ESC: EXIT";
+                       window.close();
+                   }
+                   else
+                       _entering_func = false;
                 break;
 
                case sf::Keyboard::Enter:
-                   if (_entering_func == false) {
+                   if (! _entering_func) {
                      sidebar[SB_KEY_PRESSED] = "ENTER";
                      _command = 8;
                    }
                    else {   // _entering_func == true
                        _entering_func = false;
                        sidebar[_sidebar_index++] = _function;
+                       _info->_equation = _function;
                        _function = "";
                    }
                    break;
 
                case sf::Keyboard::LShift:
-                   sidebar[SB_KEY_PRESSED] = "SHIFT + ENTER";
-                   // if (sf::Keyboard::Space)
+                   if (! _entering_func) {
+                       sidebar[SB_KEY_PRESSED] = "SHIFT";
                        _command = 10;
+                   }
+
+                   else {
+
+                       switch (event.key.code) {
+                       case sf::Keyboard::Add:
+                           if (_entering_func)
+                               _function += "+";
+                           break;
+
+                       case sf::Keyboard::Num8:
+                           if (_entering_func)
+                               _function += "*";
+                           break;
+
+                       case sf::Keyboard::Enter:
+                           if (! _entering_func) {
+                               sidebar[SB_KEY_PRESSED] = "SHIFT";
+                               _command = 10;
+                           }
+                           break;
+                       }
+                   }
+
                    break;
 
                case sf::Keyboard::RShift:
-                   sidebar[SB_KEY_PRESSED] = "SHIFT + ENTER";
-                   // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+                   if (! _entering_func) {
+                       sidebar[SB_KEY_PRESSED] = "SHIFT";
                        _command = 10;
+                   }
+                   break;
+
+               case sf::Keyboard::Space:
+                   if (_entering_func)
+                       _function += " ";
+                   break;
+
+               case sf::Keyboard::Backspace:
+                   if (_entering_func && ! _function.empty())
+                       _function.pop_back();
                    break;
 
                case sf::Keyboard::A:
@@ -183,7 +230,6 @@ void animate::processEvents()
                case sf::Keyboard::F:
                    if(! _entering_func) {
                         _entering_func = true;
-                        entering_func();
                    }
                    else if (_entering_func)
                        _function += "f";
@@ -247,6 +293,8 @@ void animate::processEvents()
                case sf::Keyboard::R:
                    if (_entering_func)
                        _function += "r";
+                   else
+                       _info->_domain = sf::Vector2f(-6,6);
                    break;
 
                case sf::Keyboard::S:
@@ -288,6 +336,76 @@ void animate::processEvents()
                    if (_entering_func)
                        _function += "z";
                    break;
+
+               case sf::Keyboard::Num0:
+                   if (_entering_func)
+                       _function += "0";
+                   break;
+
+               case sf::Keyboard::Num1:
+                   if (_entering_func)
+                       _function += "1";
+                   break;
+
+               case sf::Keyboard::Num2:
+                   if (_entering_func)
+                       _function += "2";
+                   break;
+
+               case sf::Keyboard::Num3:
+                   if (_entering_func)
+                       _function += "3";
+                   break;
+
+               case sf::Keyboard::Num4:
+                   if (_entering_func)
+                       _function += "4";
+                   break;
+
+               case sf::Keyboard::Num5:
+                   if (_entering_func)
+                       _function += "5";
+                   break;
+
+               case sf::Keyboard::Num6:
+                   if (_entering_func)
+                       _function += "6";
+                   break;
+
+               case sf::Keyboard::Num7:
+                   if (_entering_func)
+                       _function += "7";
+                   break;
+
+               case sf::Keyboard::Num8:
+                   if (_entering_func)
+                       _function += "8";
+                   break;
+
+               case sf::Keyboard::Num9:
+                   if (_entering_func)
+                       _function += "9";
+                   break;
+
+               case sf::Keyboard::Add:
+                   if (_entering_func)
+                       _function += "+";
+                   break;
+
+               case sf::Keyboard::Subtract:
+                   if (_entering_func)
+                       _function += "-";
+                   break;
+
+               case sf::Keyboard::Divide:
+                   if (_entering_func)
+                       _function += "/";
+                   break;
+
+               case sf::Keyboard::Multiply:
+                   if (_entering_func)
+                       _function += "*";
+                   break;
                }
 
                break;
@@ -322,8 +440,6 @@ void animate::processEvents()
                default:     break;
            }    // switch
 
-           //entering_func();
-
        }    // while
 }
 
@@ -344,26 +460,5 @@ string mouse_pos_string(sf::RenderWindow& window){
             ", " +
             to_string(sf::Mouse::getPosition(window).y) +
             ")";
-}
-
-void animate::entering_func() {
-    if (_entering_func) {
-        cout << "draw rect" << endl;
-        sf::RectangleShape input_box(sf::Vector2f(300, 150));
-        input_box.setPosition(sf::Vector2f(_info->_window_dimensions.x / 8, 100));
-//        input_box.setFillColor(sf::Color::Black);
-//        input_box.setOutlineColor(sf::Color::Yellow);
-
-        window.draw(input_box);
-
-        sf::Text func_text;
-        func_text.setFont(font);
-        func_text.setCharacterSize(15);
-        func_text.setStyle(sf::Text::Bold);
-        func_text.setColor(sf::Color::Yellow);
-        func_text.setString(_function);
-        window.draw(func_text);
-
-    }
 }
 

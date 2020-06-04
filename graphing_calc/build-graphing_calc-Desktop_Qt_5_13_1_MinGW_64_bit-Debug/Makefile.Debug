@@ -331,6 +331,7 @@ debug/animate.o: ../graphing_calc/animate.cpp ../graphing_calc/animate.h \
 		../../shunting_yard/shunting_yard/numbers.h \
 		../../shunting_yard/shunting_yard/lparen.h \
 		../../shunting_yard/shunting_yard/rparen.h \
+		../graphing_calc/tokenizer.h \
 		../graphing_calc/sidebar.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\animate.o ..\graphing_calc\animate.cpp
 
@@ -507,7 +508,8 @@ debug/graph.o: ../graphing_calc/graph.cpp ../graphing_calc/graph.h \
 		../../shunting_yard/shunting_yard/operators.h \
 		../../shunting_yard/shunting_yard/numbers.h \
 		../../shunting_yard/shunting_yard/lparen.h \
-		../../shunting_yard/shunting_yard/rparen.h
+		../../shunting_yard/shunting_yard/rparen.h \
+		../graphing_calc/tokenizer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\graph.o ..\graphing_calc\graph.cpp
 
 debug/graph_info.o: ../graphing_calc/graph_info.cpp ../graphing_calc/graph_info.h \
@@ -685,6 +687,7 @@ debug/main.o: ../graphing_calc/main.cpp ../graphing_calc/animate.h \
 		../../shunting_yard/shunting_yard/numbers.h \
 		../../shunting_yard/shunting_yard/lparen.h \
 		../../shunting_yard/shunting_yard/rparen.h \
+		../graphing_calc/tokenizer.h \
 		../graphing_calc/sidebar.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\graphing_calc\main.cpp
 
@@ -781,7 +784,8 @@ debug/plot.o: ../graphing_calc/plot.cpp ../graphing_calc/plot.h \
 		../../shunting_yard/shunting_yard/operators.h \
 		../../shunting_yard/shunting_yard/numbers.h \
 		../../shunting_yard/shunting_yard/lparen.h \
-		../../shunting_yard/shunting_yard/rparen.h
+		../../shunting_yard/shunting_yard/rparen.h \
+		../graphing_calc/tokenizer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\plot.o ..\graphing_calc\plot.cpp
 
 debug/rpn.o: ../graphing_calc/rpn.cpp ../graphing_calc/rpn.h \
@@ -972,10 +976,23 @@ debug/system.o: ../graphing_calc/system.cpp ../graphing_calc/system.h \
 		../../shunting_yard/shunting_yard/operators.h \
 		../../shunting_yard/shunting_yard/numbers.h \
 		../../shunting_yard/shunting_yard/lparen.h \
-		../../shunting_yard/shunting_yard/rparen.h
+		../../shunting_yard/shunting_yard/rparen.h \
+		../graphing_calc/tokenizer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\system.o ..\graphing_calc\system.cpp
 
-debug/tokenizer.o: ../graphing_calc/tokenizer.cpp ../graphing_calc/tokenizer.h
+debug/tokenizer.o: ../graphing_calc/tokenizer.cpp ../graphing_calc/tokenizer.h \
+		../../shunting_yard/shunting_yard/shunt_yard.h \
+		../../shunting_yard/shunting_yard/token.h \
+		../../!includes/stack_and_queue/stack_and_queue/queue.h \
+		../../!includes/iterated_list/iterated_list/iterated_list.h \
+		../../!includes/node/node.h \
+		../../!includes/my_list/my_list.h \
+		../../!includes/stack_and_queue/stack_and_queue/stack.h \
+		../../shunting_yard/shunting_yard/function.h \
+		../../shunting_yard/shunting_yard/operators.h \
+		../../shunting_yard/shunting_yard/numbers.h \
+		../../shunting_yard/shunting_yard/lparen.h \
+		../../shunting_yard/shunting_yard/rparen.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\tokenizer.o ..\graphing_calc\tokenizer.cpp
 
 ####### Install

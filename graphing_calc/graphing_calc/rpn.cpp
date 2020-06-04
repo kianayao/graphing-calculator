@@ -1,7 +1,7 @@
 #include "rpn.h"
 #include <cmath>
 
-rpn::rpn() {
+rpn::rpn(): _evaluate() {
     // INTENTIONALLY LEFT BLANK
 }
 

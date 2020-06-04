@@ -11,7 +11,8 @@ public:
     void draw(sf::RenderWindow &window);
     void draw_axis(sf::RenderWindow &window);
     void commands(int command);
-    void entering_func(bool entering, string func);
+    void entering_func(sf::RenderWindow &window,
+                       bool entering, string func);
 private:
     graph_info* _info;
     plot _plotter;
