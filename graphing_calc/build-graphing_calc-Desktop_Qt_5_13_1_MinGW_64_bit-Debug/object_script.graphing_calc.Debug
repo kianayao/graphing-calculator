@@ -1,0 +1,17 @@
+debug/lparen.o
+debug/numbers.o
+debug/operators.o
+debug/rparen.o
+debug/shunt_yard.o
+debug/token.o
+debug/function.o
+debug/animate.o
+debug/coordinate_translator.o
+debug/graph.o
+debug/graph_info.o
+debug/main.o
+debug/plot.o
+debug/rpn.o
+debug/sidebar.o
+debug/system.o
+debug/tokenizer.o

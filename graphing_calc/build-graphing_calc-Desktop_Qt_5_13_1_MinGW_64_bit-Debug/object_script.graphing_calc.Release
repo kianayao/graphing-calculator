@@ -1,0 +1,17 @@
+release/lparen.o
+release/numbers.o
+release/operators.o
+release/rparen.o
+release/shunt_yard.o
+release/token.o
+release/function.o
+release/animate.o
+release/coordinate_translator.o
+release/graph.o
+release/graph_info.o
+release/main.o
+release/plot.o
+release/rpn.o
+release/sidebar.o
+release/system.o
+release/tokenizer.o
